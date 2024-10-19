@@ -47,7 +47,7 @@ const sourceToClassNames = async (source: string, file: string) => {
   }
 };
 
-interface AllOptions {
+export interface AllOptions {
   /** The banner to add to the top of the generated file. Default: `"// This file is generated automatically do not modify it by hand"`  */
   banner: string;
   /** The glob pattern to search for scss files. Default: `src/ ** /*.module.scss` */
@@ -227,7 +227,9 @@ const logRun = async (
   }
 };
 
-export const WatchScssPlugin = (_options: Options = defaultOptions): Plugin => {
+export const WatchScssPlugin = (
+  _options: Partial<AllOptions> = defaultOptions // NOTE: Using partial here slightly reduces bundle size
+): Plugin => {
   const options = { ...defaultOptions, ..._options };
 
   return {
