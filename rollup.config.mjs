@@ -5,6 +5,7 @@ import json from "@rollup/plugin-json";
 import { defineConfig } from "rollup";
 import del from "rollup-plugin-delete";
 import { terser } from "rollup-plugin-terser";
+// import copy from "rollup-plugin-copy";
 
 export default defineConfig({
   input: "src/index.ts", // Entry file
@@ -36,5 +37,6 @@ export default defineConfig({
     json(),
     del({ targets: "dist/*" }), // Deletes dist folder before building
     terser(), // Minifies JavaScript
+    // copy({ targets: [{ src: "package.json", dest: "dist" }] }), // Copies package.json to dist folder
   ],
 });

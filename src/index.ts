@@ -227,7 +227,7 @@ const logRun = async (
   }
 };
 
-export const WatchScssPlugin = (
+export const ScssTypesPlugin = (
   _options: Partial<AllOptions> = defaultOptions // NOTE: Using partial here slightly reduces bundle size
 ): Plugin => {
   const options = { ...defaultOptions, ..._options };
