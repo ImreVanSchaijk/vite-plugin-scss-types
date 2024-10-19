@@ -1,0 +1,1 @@
+# vite-scss-types-plugin
