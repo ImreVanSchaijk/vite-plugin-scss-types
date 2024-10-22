@@ -6,10 +6,14 @@ import { camelCase } from "change-case";
 import { getTsconfig } from "get-tsconfig";
 import PostCssModulesPlugin from "postcss-modules";
 import * as sass from "sass-embedded";
-import { Plugin } from "vite";
+import { type Plugin } from "vite";
 import { glob } from "glob";
 import { compile, JSONSchema } from "json-schema-to-typescript";
 import postcss from "postcss";
+
+const logError = (error: Error) => {
+  console.error(`❌ ${error.message}`);
+};
 
 const getLoadPaths = () => {
   const tsConfig = getTsconfig();
@@ -42,7 +46,8 @@ const sourceToClassNames = async (source: string, file: string) => {
     return Object.keys(output).map((key) => {
       return camelCase(key);
     });
-  } catch (_) {
+  } catch (e) {
+    logError(e as Error);
     return undefined;
   }
 };
@@ -215,7 +220,7 @@ const logRun = async (
       if (error.message.includes("❌")) {
         console.error(error.message);
       } else {
-        console.error(`❌ Error regenerating SCSS types: ${error.message}`);
+        logError(error);
       }
     }
 
