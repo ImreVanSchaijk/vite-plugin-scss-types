@@ -1,9 +1,6 @@
 {
-  "name": "@imrevanschaijk/vite-scss-types-plugin",
+  "name": "vite-plugin-scss-types",
   "version": "0.0.2",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "files": [
     "dist/*"
   ],
