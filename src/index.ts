@@ -5,9 +5,12 @@ import path from "node:path";
 import { type Plugin } from "vite";
 import { glob } from "glob";
 import { compile, JSONSchema } from "json-schema-to-typescript";
+
 import { getClassNames } from "./helpers/getClassNames";
-import { logError } from "helpers/logError";
-import { AllOptions } from "types/Options";
+import { logError } from "./helpers/logError";
+import { type ScssTypesPluginOptions } from "./types/ScssTypesPluginOptions";
+
+export { type ScssTypesPluginOptions } from "./types/ScssTypesPluginOptions";
 
 const getFilePaths = async (globPattern: string) => {
   return (await glob(globPattern)).map((file) => {
@@ -15,7 +18,7 @@ const getFilePaths = async (globPattern: string) => {
   });
 };
 
-const defaultOptions: Options = {
+export const defaultOptions: ScssTypesPluginOptions = {
   banner: "// This file is generated automatically do not modify it by hand",
   fileGlob: "src/**/*.module.scss",
   initialize: true,
@@ -25,9 +28,10 @@ const defaultOptions: Options = {
   localsConvention: "camelCaseOnly",
 };
 
-type Options = Partial<AllOptions>;
-
-const removeOrphanedFiles = async (files: string[], options: Options) => {
+const removeOrphanedFiles = async (
+  files: string[],
+  options: Partial<ScssTypesPluginOptions>
+) => {
   const definitions = await getFilePaths(`${options.fileGlob}.d.ts`);
   const orphans = definitions.filter((definition) => {
     return !files.includes(definition.replace(".d.ts", ""));
@@ -42,7 +46,7 @@ const removeOrphanedFiles = async (files: string[], options: Options) => {
 
 const classNamesToTypeScript = async (
   classNames: string[],
-  options: Options
+  options: Partial<ScssTypesPluginOptions>
 ) => {
   const title = options.name || "Styles";
 
@@ -78,7 +82,7 @@ const classNamesToTypeScript = async (
 
 const generate = async (
   filePath: string,
-  options: Options = defaultOptions
+  options: Partial<ScssTypesPluginOptions> = defaultOptions
 ) => {
   const classNames = await getClassNames(filePath);
 
@@ -115,7 +119,7 @@ const start = async (
     fileGlob = defaultOptions.fileGlob,
     banner = defaultOptions.banner,
     name = defaultOptions.name,
-  }: Options = defaultOptions
+  }: Partial<ScssTypesPluginOptions> = defaultOptions
 ) => {
   if (fileGlob === undefined) {
     throw new Error("fileGlob is required");
@@ -176,7 +180,7 @@ const logRun = async (
 };
 
 export const ScssTypesPlugin = (
-  _options: Partial<AllOptions> = defaultOptions // NOTE: Using partial here slightly reduces bundle size
+  _options: Partial<ScssTypesPluginOptions> = defaultOptions
 ): Plugin => {
   const options = { ...defaultOptions, ..._options };
 

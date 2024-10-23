@@ -3,10 +3,8 @@ import { logError } from "../logError/index";
 import * as sass from "sass-embedded";
 import { getTsconfig } from "get-tsconfig";
 import { resolve, dirname } from "node:path";
-import { AllOptions } from "types/Options";
+import { ScssTypesPluginOptions } from "types/ScssTypesPluginOptions";
 import PostcssModulesPlugin from "postcss-modules";
-
-type Options = Partial<AllOptions>;
 
 const getLoadPaths = () => {
   const tsConfig = getTsconfig();
@@ -21,7 +19,7 @@ const getLoadPaths = () => {
 /** Converts CSS source (string) to an array of camelcased class names */
 export const getClassNames = async (
   file: string,
-  { localsConvention = "camelCaseOnly" }: Options = {}
+  { localsConvention = "camelCaseOnly" }: Partial<ScssTypesPluginOptions> = {}
 ) => {
   let output: Record<string, string> = {};
 

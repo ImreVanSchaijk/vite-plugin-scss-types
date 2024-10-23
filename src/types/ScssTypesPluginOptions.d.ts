@@ -4,7 +4,7 @@ type LocalsConvention = Parameters<
   typeof PostcssModulesPlugin
 >[0]["localsConvention"];
 
-export interface AllOptions {
+export interface ScssTypesPluginOptions {
   /** The banner to add to the top of the generated file. Default: `"// This file is generated automatically do not modify it by hand"`  */
   banner: string;
   /** The glob pattern to search for scss files. Default: `src/ ** /*.module.scss` */
