@@ -2,70 +2,18 @@ import { access } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { camelCase } from "change-case";
-import { getTsconfig } from "get-tsconfig";
-import PostCssModulesPlugin from "postcss-modules";
-import * as sass from "sass-embedded";
 import { type Plugin } from "vite";
 import { glob } from "glob";
 import { compile, JSONSchema } from "json-schema-to-typescript";
-import postcss from "postcss";
-
-const logError = (error: Error) => {
-  console.error(`❌ ${error.message}`);
-};
-
-const getLoadPaths = () => {
-  const tsConfig = getTsconfig();
-
-  if (tsConfig?.path) {
-    return [path.resolve(path.dirname(tsConfig?.path), "src")];
-  }
-
-  return [];
-};
+import { getClassNames } from "./helpers/getClassNames";
+import { logError } from "helpers/logError";
+import { AllOptions } from "types/Options";
 
 const getFilePaths = async (globPattern: string) => {
   return (await glob(globPattern)).map((file) => {
     return path.resolve(file);
   });
 };
-
-const sourceToClassNames = async (source: string, file: string) => {
-  let output: Record<string, string> = {};
-
-  try {
-    await postcss([
-      PostCssModulesPlugin({
-        getJSON: (_, json) => {
-          output = json;
-        },
-      }),
-    ]).process(source, { from: file });
-
-    return Object.keys(output).map((key) => {
-      return camelCase(key);
-    });
-  } catch (e) {
-    logError(e as Error);
-    return undefined;
-  }
-};
-
-export interface AllOptions {
-  /** The banner to add to the top of the generated file. Default: `"// This file is generated automatically do not modify it by hand"`  */
-  banner: string;
-  /** The glob pattern to search for scss files. Default: `src/ ** /*.module.scss` */
-  fileGlob: string;
-  /** Whether or not to run on startup. Default: `true` */
-  initialize: boolean;
-  /** Whether or not to allow generation for non-module files. Default: `true` */
-  modulesOnly: boolean;
-  /** The name of the generated interface. Default: `"Styles"` */
-  name: string;
-  /** Whether or not to remove orphaned files. Default: `true` */
-  removeOrphans: boolean;
-}
 
 const defaultOptions: Options = {
   banner: "// This file is generated automatically do not modify it by hand",
@@ -74,6 +22,7 @@ const defaultOptions: Options = {
   modulesOnly: true,
   name: "Styles",
   removeOrphans: true,
+  localsConvention: "camelCaseOnly",
 };
 
 type Options = Partial<AllOptions>;
@@ -131,13 +80,7 @@ const generate = async (
   filePath: string,
   options: Options = defaultOptions
 ) => {
-  const loadPaths = getLoadPaths();
-
-  const data = await sass.compileAsync(filePath, {
-    loadPaths,
-  });
-
-  const classNames = await sourceToClassNames(data.css, filePath);
+  const classNames = await getClassNames(filePath);
 
   const targetPath = `${filePath}.d.ts`;
 
