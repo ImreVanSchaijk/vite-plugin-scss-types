@@ -26,6 +26,7 @@ export const defaultOptions: ScssTypesPluginOptions = {
   name: "Styles",
   removeOrphans: true,
   localsConvention: "camelCaseOnly",
+  additionalProperties: false,
 };
 
 const removeOrphanedFiles = async (
@@ -53,7 +54,7 @@ const classNamesToTypeScript = async (
   const schema: JSONSchema = {
     title,
     type: "object",
-    additionalProperties: { type: "string" },
+    additionalProperties: options.additionalProperties,
     properties: classNames.sort().reduce((acc, className) => {
       return {
         ...acc,
@@ -119,6 +120,7 @@ const start = async (
     fileGlob = defaultOptions.fileGlob,
     banner = defaultOptions.banner,
     name = defaultOptions.name,
+    additionalProperties = defaultOptions.additionalProperties,
   }: Partial<ScssTypesPluginOptions> = defaultOptions
 ) => {
   if (fileGlob === undefined) {
@@ -141,7 +143,7 @@ const start = async (
 
   await Promise.all(
     files.map(async (filePath) => {
-      return generate(filePath, { banner, name });
+      return generate(filePath, { banner, name, additionalProperties });
     })
   );
 
@@ -230,3 +232,5 @@ export const ScssTypesPlugin = (
     },
   };
 };
+
+export { getViteCssModulesOptions } from "./config";

@@ -3,7 +3,7 @@ import { logError } from "../logError/index";
 import * as sass from "sass-embedded";
 import { getTsconfig } from "get-tsconfig";
 import { resolve, dirname } from "node:path";
-import { ScssTypesPluginOptions } from "types/ScssTypesPluginOptions";
+import { type ScssTypesPluginOptions } from "types/ScssTypesPluginOptions";
 import PostcssModulesPlugin from "postcss-modules";
 
 const getLoadPaths = () => {

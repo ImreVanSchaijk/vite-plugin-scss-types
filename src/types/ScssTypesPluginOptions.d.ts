@@ -1,3 +1,4 @@
+import { JSONSchema } from "json-schema-to-typescript";
 import PostcssModulesPlugin from "postcss-modules";
 
 type LocalsConvention = Parameters<
@@ -19,4 +20,6 @@ export interface ScssTypesPluginOptions {
   removeOrphans: boolean;
   /** The locals convention to use. Default: `"camelCaseOnly"` */
   localsConvention: LocalsConvention;
+  /** Allow additional properties. Default: `false` */
+  additionalProperties: JSONSchema["additionalProperties"];
 }

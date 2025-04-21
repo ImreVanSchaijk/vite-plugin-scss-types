@@ -472,6 +472,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fishwater/vite-plugin-scss-types@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@fishwater/vite-plugin-scss-types@workspace:."
+  dependencies:
+    "@eslint/js": "npm:^9.13.0"
+    "@rollup/plugin-commonjs": "npm:^28.0.1"
+    "@rollup/plugin-json": "npm:^6.1.0"
+    "@rollup/plugin-node-resolve": "npm:^15.3.0"
+    "@rollup/plugin-terser": "npm:^0.4.4"
+    "@types/babel__core": "npm:^7"
+    "@types/babel__preset-env": "npm:^7"
+    "@types/eslint__js": "npm:^8.42.3"
+    "@types/node": "npm:^22.7.7"
+    cross-env: "npm:^7.0.3"
+    eslint: "npm:^9.13.0"
+    get-tsconfig: "npm:^4.8.1"
+    glob: "npm:^11.0.0"
+    globals: "npm:^15.11.0"
+    json-schema-to-typescript: "npm:^15.0.2"
+    postcss: "npm:^8.4.47"
+    postcss-modules: "npm:^6.0.0"
+    rimraf: "npm:^6.0.1"
+    rollup: "npm:^4.24.0"
+    rollup-plugin-copy: "npm:^3.5.0"
+    rollup-plugin-typescript2: "npm:^0.36.0"
+    sass-embedded: "npm:^1.80.3"
+    ts-node: "npm:^10.9.2"
+    tsx: "npm:^4.19.1"
+    typescript: "npm:^5.6.3"
+    typescript-eslint: "npm:^8.10.0"
+    vite: "npm:^5.4.9"
+  peerDependencies:
+    postcss: ">=8.4.0"
+    sass-embedded: ">=1.80.0"
+    vite: ">=5.0.0"
+  languageName: unknown
+  linkType: soft
+
 "@humanfs/core@npm:^0.19.0":
   version: 0.19.0
   resolution: "@humanfs/core@npm:0.19.0"
@@ -3963,44 +4001,6 @@ __metadata:
   checksum: 10c0/737fc37088a62ed3bd21466e318d21ca7ac4991d0f25546f518f017703be4ed0f9df1c5559f1dd533dddba4435a1b758fd9230e4772c1a930ef72b42f5c750fd
   languageName: node
   linkType: hard
-
-"vite-plugin-scss-types@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "vite-plugin-scss-types@workspace:."
-  dependencies:
-    "@eslint/js": "npm:^9.13.0"
-    "@rollup/plugin-commonjs": "npm:^28.0.1"
-    "@rollup/plugin-json": "npm:^6.1.0"
-    "@rollup/plugin-node-resolve": "npm:^15.3.0"
-    "@rollup/plugin-terser": "npm:^0.4.4"
-    "@types/babel__core": "npm:^7"
-    "@types/babel__preset-env": "npm:^7"
-    "@types/eslint__js": "npm:^8.42.3"
-    "@types/node": "npm:^22.7.7"
-    cross-env: "npm:^7.0.3"
-    eslint: "npm:^9.13.0"
-    get-tsconfig: "npm:^4.8.1"
-    glob: "npm:^11.0.0"
-    globals: "npm:^15.11.0"
-    json-schema-to-typescript: "npm:^15.0.2"
-    postcss: "npm:^8.4.47"
-    postcss-modules: "npm:^6.0.0"
-    rimraf: "npm:^6.0.1"
-    rollup: "npm:^4.24.0"
-    rollup-plugin-copy: "npm:^3.5.0"
-    rollup-plugin-typescript2: "npm:^0.36.0"
-    sass-embedded: "npm:^1.80.3"
-    ts-node: "npm:^10.9.2"
-    tsx: "npm:^4.19.1"
-    typescript: "npm:^5.6.3"
-    typescript-eslint: "npm:^8.10.0"
-    vite: "npm:^5.4.9"
-  peerDependencies:
-    postcss: ">=8.4.0"
-    sass-embedded: ">=1.80.0"
-    vite: ">=5.0.0"
-  languageName: unknown
-  linkType: soft
 
 "vite@npm:^5.4.9":
   version: 5.4.9
