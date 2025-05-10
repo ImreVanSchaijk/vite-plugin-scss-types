@@ -10,11 +10,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "outDir": "./dist",
-    "declarationDir": "./dist",
-    "paths": {
-      "helpers/*": ["./src/helpers/*"],
-      "types/*": ["./src/types/*"]
-    }
+    "declarationDir": "./dist"
   },
   "include": ["src/**/*"]
 }

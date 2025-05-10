@@ -7,14 +7,13 @@
     "dist/*.js.map",
     "dist/types/*.d.ts"
   ],
-  "main": "dist/bundle.cjs.js",
-  "module": "dist/bundle.esm.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/bundle.esm.js",
       "require": "./dist/bundle.cjs.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/bundle.esm.js"
     }
   },
   "type": "module",

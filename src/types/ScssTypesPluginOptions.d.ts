@@ -22,4 +22,6 @@ export interface ScssTypesPluginOptions {
   localsConvention: LocalsConvention;
   /** Allow additional properties. Default: `false` */
   additionalProperties: JSONSchema["additionalProperties"];
+  /** The name of the export. Default: `"styles"` */
+  exportName?: string | string[];
 }

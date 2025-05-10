@@ -18,16 +18,17 @@ const getFilePaths = async (globPattern: string) => {
   });
 };
 
-export const defaultOptions: ScssTypesPluginOptions = {
+export const defaultOptions = {
   banner: "// This file is generated automatically do not modify it by hand",
   fileGlob: "src/**/*.module.scss",
   initialize: true,
   modulesOnly: true,
   name: "Styles",
+  exportName: "styles",
   removeOrphans: true,
   localsConvention: "camelCaseOnly",
   additionalProperties: false,
-};
+} as const satisfies ScssTypesPluginOptions;
 
 const removeOrphanedFiles = async (
   files: string[],
@@ -49,7 +50,8 @@ const classNamesToTypeScript = async (
   classNames: string[],
   options: Partial<ScssTypesPluginOptions>
 ) => {
-  const title = options.name || "Styles";
+  const title = options.name || defaultOptions.name;
+  const exportNames = [options.exportName || defaultOptions.exportName].flat();
 
   const schema: JSONSchema = {
     title,
@@ -72,8 +74,10 @@ const classNamesToTypeScript = async (
 
   const output = [
     tsInterface,
-    `declare const styles: ${title};`,
-    "export default styles;",
+    ...exportNames.flatMap((exportName) => {
+      return `declare const ${exportName}: ${title};`;
+    }),
+    `export default ${exportNames[0]};`,
   ]
     .join("\n\n")
     .replace(/\r\n/g, "\n");
@@ -121,6 +125,7 @@ const start = async (
     banner = defaultOptions.banner,
     name = defaultOptions.name,
     additionalProperties = defaultOptions.additionalProperties,
+    exportName = defaultOptions.exportName,
   }: Partial<ScssTypesPluginOptions> = defaultOptions
 ) => {
   if (fileGlob === undefined) {
@@ -143,7 +148,12 @@ const start = async (
 
   await Promise.all(
     files.map(async (filePath) => {
-      return generate(filePath, { banner, name, additionalProperties });
+      return generate(filePath, {
+        banner,
+        name,
+        additionalProperties,
+        exportName,
+      });
     })
   );
 

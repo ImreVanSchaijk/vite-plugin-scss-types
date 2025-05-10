@@ -21,13 +21,13 @@ const getClassName = (name: string, filename: string, css?: string) => {
 };
 
 export const getViteCssModulesOptions = (
-  mode: "development" | "production",
+  isProduction: boolean,
   classNameLength: number = 5
 ) => {
   return {
     localsConvention: "camelCaseOnly",
     generateScopedName:
-      mode === "development"
+      isProduction === false
         ? "[name]__[local]--[hash:base64:5]"
         : (name: string, filename: string, css: string) => {
             const hash = crypto
