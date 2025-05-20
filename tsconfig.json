@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node", // Required for resolving modules correctly
+    "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -10,7 +10,8 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "outDir": "./dist",
-    "declarationDir": "./dist"
+    "declarationDir": "./dist-types",
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"]
 }

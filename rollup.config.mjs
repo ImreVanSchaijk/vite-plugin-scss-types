@@ -1,44 +1,58 @@
-import { defineConfig } from "rollup";
-
-import commonjs from "@rollup/plugin-commonjs";
-import json from "@rollup/plugin-json";
-import resolve from "@rollup/plugin-node-resolve";
-import terser from "@rollup/plugin-terser";
-import copy from "rollup-plugin-copy";
-
 import typescript from "rollup-plugin-typescript2";
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import json from "@rollup/plugin-json";
+// import terser from "@rollup/plugin-terser";
+import { defineConfig } from "rollup";
+import { dts } from "rollup-plugin-dts";
 
-export default defineConfig({
-  input: "src/index.ts", // Entry file
-  output: ["cjs", "esm"].map((format) => {
-    return {
-      file: `dist/bundle.${format}.js`,
-      inlineDynamicImports: true,
-      format,
-      sourcemap: true,
-    };
-  }),
-  external: [
-    "change-case",
-    "get-tsconfig",
-    "glob",
-    "json-schema-to-typescript",
-    "vite",
-    "postcss",
-    "postcss-modules",
-    "sass-embedded",
-  ],
+const sharedConfig = {
+  input: "src/index.ts",
   plugins: [
     resolve(),
     commonjs(),
+    json(),
     typescript({
       tsconfig: "./tsconfig.json",
       useTsconfigDeclarationDir: true,
+      clean: true,
     }),
-    json(),
-    terser(),
-    copy({
-      targets: [{ src: "src/types", dest: "dist" }],
-    }),
+    // terser(),
   ],
-});
+  external: [
+    "vite",
+    "postcss",
+    "sass-embedded",
+    "get-tsconfig",
+    "glob",
+    "json-schema-to-typescript",
+    "postcss-modules",
+  ],
+};
+
+export default defineConfig([
+  {
+    ...sharedConfig,
+    output: {
+      file: "dist/index.cjs",
+      format: "cjs",
+      sourcemap: true,
+    },
+  },
+  {
+    ...sharedConfig,
+    output: {
+      file: "dist/index.js",
+      format: "es",
+      sourcemap: true,
+    },
+  },
+  {
+    input: "dist-types/index.d.ts",
+    output: {
+      file: "dist/index.d.ts",
+      format: "esm",
+    },
+    plugins: [dts()],
+  },
+]);
